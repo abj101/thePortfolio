@@ -1,0 +1,180 @@
+@import "./tokens.css";
+
+.stack-root {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  background: var(--color-paper);
+}
+
+.stack-root :global(.experience-canvas) {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-paper);
+}
+
+.stack-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Stack overlay animation system — opacity only (DESIGN.md) */
+
+.stack-text-moment-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.text-moment {
+  margin: 0;
+  max-width: min(32rem, 90vw);
+  padding: 0 var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-title);
+  line-height: 1.3;
+  color: var(--color-ink);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1200ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.stack-chrome-enter {
+  opacity: 0;
+  animation: stack-chrome-fade-in 1200ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.stack-chrome-enter--delayed {
+  animation-delay: 500ms;
+}
+
+@keyframes stack-chrome-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.text-moment.visible {
+  opacity: 1;
+}
+
+.phase-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 1;
+  background-color: color-mix(in srgb, var(--color-paper) 0%, transparent);
+  pointer-events: none;
+  transition: background-color 600ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.phase-veil.active {
+  background-color: var(--color-paper);
+}
+
+.escape-hatch {
+  position: absolute;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  opacity: 0.15;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: opacity 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.escape-hatch:hover,
+.escape-hatch:focus-visible {
+  opacity: 1;
+}
+
+.escape-hatch.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.escape-hatch__icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.stack-sound-toggle,
+.stack-next-btn {
+  position: absolute;
+  bottom: var(--space-md);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  opacity: 0.15;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: opacity 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.stack-sound-toggle:hover,
+.stack-sound-toggle:focus-visible,
+.stack-next-btn:hover,
+.stack-next-btn:focus-visible {
+  opacity: 1;
+}
+
+.stack-sound-toggle {
+  left: var(--space-md);
+}
+
+.stack-sound-toggle svg,
+.stack-next-btn svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.stack-next-btn {
+  left: calc(var(--space-md) + 2.25rem + var(--space-xs));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-moment,
+  .phase-veil,
+  .escape-hatch,
+  .stack-sound-toggle,
+  .stack-next-btn {
+    transition-duration: 0.01ms;
+  }
+
+  .stack-chrome-enter {
+    animation: none;
+    opacity: 1;
+  }
+}

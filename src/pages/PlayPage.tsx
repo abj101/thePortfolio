@@ -1,17 +1,24 @@
-import { Link } from "react-router-dom";
-import { ExperienceCanvas } from "../canvas/ExperienceCanvas";
-import styles from "./PlayPage.module.css";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { HUB_INDEX, StackProvider, useStackStore } from "../stack";
 
 export function PlayPage() {
-  return (
-    <div className={styles.shell}>
-      <ExperienceCanvas />
-      <div className={styles.overlay}>
-        <p className={styles.note}>Memory journey — scenes coming next.</p>
-        <Link className={styles.escape} to="/portfolio">
-          → portfolio
-        </Link>
-      </div>
-    </div>
-  );
+  const navigate = useNavigate();
+  const currentIndex = useStackStore((s) => s.currentIndex);
+
+  useEffect(() => {
+    useStackStore.setState({
+      currentIndex: 0,
+      phase: "PLAYING",
+      memoryVisible: false,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (currentIndex === HUB_INDEX) {
+      navigate("/portfolio", { replace: true });
+    }
+  }, [currentIndex, navigate]);
+
+  return <StackProvider />;
 }

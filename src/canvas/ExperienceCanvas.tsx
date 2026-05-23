@@ -1,5 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import type { ReactNode } from "react";
+import * as THREE from "three";
+
+const PAPER_CLEAR = 0xf5f2ec;
 
 type ExperienceCanvasProps = {
   children?: ReactNode;
@@ -15,7 +18,10 @@ export function ExperienceCanvas({ children }: ExperienceCanvasProps) {
       className="experience-canvas"
       orthographic
       camera={{ position: [0, 0, 10], zoom: 50 }}
-      gl={{ antialias: true, alpha: true }}
+      gl={{ antialias: true, alpha: false }}
+      onCreated={({ gl }) => {
+        gl.setClearColor(new THREE.Color(PAPER_CLEAR), 1);
+      }}
     >
       {children}
     </Canvas>
