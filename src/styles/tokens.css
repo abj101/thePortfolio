@@ -1,0 +1,25 @@
+:root {
+  /* DESIGN.md — resolved at implementation; OKLCH-ready placeholders */
+  --color-paper: #f5f2ec;
+  --color-ink: #2a2824;
+  --color-mist: #e8e4dc;
+  --color-accent: #8b4513;
+
+  --font-sans: "DM Sans", system-ui, sans-serif;
+
+  --text-display: clamp(2rem, 5vw, 3.5rem);
+  --text-headline: clamp(1.5rem, 3vw, 2rem);
+  --text-title: 1.25rem;
+  --text-body: 1.0625rem;
+  --text-label: 0.8125rem;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+}

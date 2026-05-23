@@ -1,0 +1,21 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.env
+.env.*
+
+# Markdown — track README only
+*.md
+!README.md
+!readme.md
+!Readme.md
+!**/README.md
+!**/readme.md
+!**/Readme.md
+
+# Cursor / agents
+.cursor/
+.agents/
+skills-lock.json
