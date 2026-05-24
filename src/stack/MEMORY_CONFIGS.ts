@@ -15,8 +15,7 @@ export type MemoryConfig = {
 export const MEMORY_CONFIGS: MemoryConfig[] = [
   {
     id: "snake",
-    component: lazy(() => import("../scenes/ProofScene")),
-    stubLabel: "Memory 1 — stub",
+    component: lazy(() => import("../scenes/Snake")),
     text: "It started with my grandpa's Nokia.",
     textDelay: 1400,
     textHold: 4000,

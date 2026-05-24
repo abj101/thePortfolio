@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from "react";
-import { ExperienceCanvas } from "../canvas/ExperienceCanvas";
+import { StackCanvas } from "./StackCanvas";
 import { EscapeHatch } from "./EscapeHatch";
 import { MEMORY_CONFIGS } from "./MEMORY_CONFIGS";
 import { PhaseVeil } from "./PhaseVeil";
@@ -16,6 +16,8 @@ function ActiveScene() {
   const soundEnabled = useStackStore((s) => s.soundEnabled);
   const toggleSound = useStackStore((s) => s.toggleSound);
   const signalSceneReady = useStackStore((s) => s.signalSceneReady);
+  const memoryVisible = useStackStore((s) => s.memoryVisible);
+  const phase = useStackStore((s) => s.phase);
 
   const config = MEMORY_CONFIGS[currentIndex];
   if (!config) return null;
@@ -29,6 +31,8 @@ function ActiveScene() {
         onComplete={advance}
         soundEnabled={soundEnabled}
         onToggleSound={toggleSound}
+        paused={!memoryVisible}
+        displayed={memoryVisible || phase === "COMPLETING"}
         onReady={signalSceneReady}
       />
     </Suspense>
@@ -40,6 +44,8 @@ type SceneMountProps = {
   onComplete: MemorySceneProps["onComplete"];
   soundEnabled: boolean;
   onToggleSound: MemorySceneProps["onToggleSound"];
+  paused: boolean;
+  displayed: boolean;
   onReady: () => void;
 };
 
@@ -48,6 +54,8 @@ function SceneMount({
   onComplete,
   soundEnabled,
   onToggleSound,
+  paused,
+  displayed,
   onReady,
 }: SceneMountProps) {
   useEffect(() => {
@@ -59,6 +67,8 @@ function SceneMount({
       onComplete={onComplete}
       soundEnabled={soundEnabled}
       onToggleSound={onToggleSound}
+      paused={paused}
+      displayed={displayed}
     />
   );
 }
@@ -75,9 +85,9 @@ export function StackProvider() {
 
   return (
     <div className="stack-root">
-      <ExperienceCanvas>
+      <StackCanvas>
         {config ? <ActiveScene key={currentIndex} /> : null}
-      </ExperienceCanvas>
+      </StackCanvas>
 
       <div className="stack-overlay">
         {config ? (

@@ -6,7 +6,7 @@ type StackState = {
   currentIndex: number;
   phase: StackPhase;
   soundEnabled: boolean;
-  /** Stub / memory chrome — after intro text finishes. */
+  /** Game revealed after intro text fades out; drives canvas + scene paused. */
   memoryVisible: boolean;
 };
 

@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "./PortfolioPage.module.css";
 
+const FEATURED = {
+  slug: "my-life-through-games",
+  title: "MY LIFE THROUGH GAMES",
+  tagline: "Seven gaming memories, made playable.",
+  tech: ["React Three Fiber", "JavaScript", "WebGL"],
+} as const;
+
 const PROJECTS = [
   {
     slug: "the-last-stick",
@@ -8,6 +15,7 @@ const PROJECTS = [
     tagline: "Narrative combat platformer. Built every player system from scratch.",
     tech: ["Unity 2D", "C#"],
     status: "In Development" as const,
+    playUrl: "#",
   },
   {
     slug: "of-bone-and-stone",
@@ -15,6 +23,7 @@ const PROJECTS = [
     tagline: "Isometric Unity RPG. Sole programmer. Also ran production for a team of five.",
     tech: ["Unity", "C#"],
     status: "Playable" as const,
+    playUrl: "#",
   },
   {
     slug: "bonestorm",
@@ -22,6 +31,7 @@ const PROJECTS = [
     tagline: "Browser game — content TBD.",
     tech: ["Phaser 3", "JavaScript"],
     status: "Playable" as const,
+    playUrl: "#",
   },
   {
     slug: "chop-chop",
@@ -29,6 +39,7 @@ const PROJECTS = [
     tagline: "Unity 3D project — content TBD.",
     tech: ["Unity 3D", "C#"],
     status: "Playable" as const,
+    playUrl: "#",
   },
 ] as const;
 
@@ -36,7 +47,6 @@ export function PortfolioPage() {
   return (
     <div className={styles.page}>
       <header className={styles.hero}>
-        <p className={styles.eyebrow}>MY LIFE THROUGH GAMES</p>
         <h1 className={styles.name}>AYUSH BANDOPADHYAY</h1>
         <p className={styles.specialization}>
           Gameplay Programmer — Game Feel &amp; Player Systems
@@ -62,6 +72,35 @@ export function PortfolioPage() {
         <h2 id="projects-heading" className={styles.sectionTitle}>
           Projects
         </h2>
+
+        <article className={styles.featured} aria-labelledby="featured-title">
+          <div className={styles.featuredMedia}>
+            <span className={styles.mediaPlaceholder}>Clip</span>
+          </div>
+          <div className={styles.featuredBody}>
+            <h3 id="featured-title" className={styles.featuredTitle}>
+              {FEATURED.title}
+            </h3>
+            <p className={styles.tagline}>{FEATURED.tagline}</p>
+            <ul className={styles.tech}>
+              {FEATURED.tech.map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
+            <div className={styles.featuredActions}>
+              <Link className={styles.primaryAction} to="/play">
+                Enter Experience
+              </Link>
+              <Link
+                className={styles.secondaryAction}
+                to={`/projects/${FEATURED.slug}`}
+              >
+                View Project
+              </Link>
+            </div>
+          </div>
+        </article>
+
         <ul className={styles.grid}>
           {PROJECTS.map((project) => (
             <li key={project.slug}>
@@ -80,12 +119,22 @@ export function PortfolioPage() {
                       <li key={tag}>{tag}</li>
                     ))}
                   </ul>
-                  <Link
-                    className={styles.viewLink}
-                    to={`/projects/${project.slug}`}
-                  >
-                    View Project
-                  </Link>
+                  <div className={styles.cardActions}>
+                    <a
+                      className={styles.primaryAction}
+                      href={project.playUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Play
+                    </a>
+                    <Link
+                      className={styles.secondaryAction}
+                      to={`/projects/${project.slug}`}
+                    >
+                      View Project
+                    </Link>
+                  </div>
                 </div>
               </article>
             </li>
@@ -97,8 +146,6 @@ export function PortfolioPage() {
         <Link to="/about">About</Link>
         <span aria-hidden="true">·</span>
         <Link to="/contact">Contact</Link>
-        <span aria-hidden="true">·</span>
-        <Link to="/">Entry</Link>
       </footer>
     </div>
   );
