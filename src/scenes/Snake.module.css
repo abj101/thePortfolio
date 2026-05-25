@@ -8,7 +8,7 @@
 }
 
 .frame {
-  width: min(17.5rem, 72vw);
+  width: var(--memory-snake-shell);
   aspect-ratio: 1;
   border: 3px solid var(--color-ink);
   border-radius: 2px;

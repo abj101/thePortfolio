@@ -92,6 +92,7 @@
 @media (min-width: 48rem) {
   .featured {
     grid-template-columns: 1fr 1fr;
+    align-items: start;
   }
 }
 
@@ -100,13 +101,6 @@
   place-items: center;
   aspect-ratio: 16 / 9;
   background: var(--color-mist);
-}
-
-@media (min-width: 48rem) {
-  .featuredMedia {
-    aspect-ratio: auto;
-    min-height: 100%;
-  }
 }
 
 .featuredBody {

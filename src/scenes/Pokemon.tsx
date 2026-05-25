@@ -634,8 +634,12 @@ function PokemonBattle({
           className={`${styles.screenOverlay} ${styles.screenBottomOverlay} ${styles.bottomScreen}`}
         >
               <div className={styles.partyDots} aria-hidden>
-                <span>● ● ● ● ● ●</span>
-                <span>○ ○ ○ ○ ○ ○</span>
+                {Array.from({ length: 6 }, (_, i) => (
+                  <span key={`filled-${i}`}>●</span>
+                ))}
+                {Array.from({ length: 6 }, (_, i) => (
+                  <span key={`empty-${i}`}>○</span>
+                ))}
               </div>
 
               <div className={styles.moveGrid}>

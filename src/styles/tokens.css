@@ -21,4 +21,19 @@
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --duration-fast: 150ms;
   --duration-normal: 300ms;
+
+  /*
+   * Path A memory shells — narrow: vw cap; wide: clamp grows toward ceiling.
+   * Snake (phone) scales slightly more aggressively than DS (handheld).
+   */
+  --memory-snake-shell: min(72vw, clamp(17.5rem, 38vw, 26rem));
+  --memory-pokemon-shell: min(92vw, clamp(24.5rem, 35vw, 32.2rem));
+
+  /* Path A stack overlay — readable at desk distance on large monitors */
+  --text-memory-caption: clamp(1.25rem, 1.05rem + 0.85vw, 1.875rem);
+  --text-stack-chrome: clamp(0.8125rem, 0.72rem + 0.45vw, 1.0625rem);
+  --stack-chrome-inset: clamp(1.5rem, 1.2rem + 1.25vw, 2.5rem);
+  --stack-chrome-btn-size: clamp(2.25rem, 2rem + 0.9vw, 2.875rem);
+  --stack-chrome-icon-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
+  --stack-escape-icon-size: clamp(1rem, 0.88rem + 0.42vw, 1.3125rem);
 }
