@@ -23,8 +23,8 @@ const APPLE_OUTER_SIZE = SEGMENT_SIZE;
 const APPLE_INNER_SIZE = 0.52;
 const MAX_BODY_SEGMENTS = 5;
 const BEZEL_INSET_PX = 12;
-/** World-unit inset so edge cells sit inside the CSS bezel, not under it. */
-const GRID_VIEW_INSET = 1;
+/** Match grid extent to the inner playfield (inside the CSS bezel). */
+const GRID_VIEW_INSET = 0;
 
 const INITIAL_SNAKE: [number, number][] = [
   [8, 8],
