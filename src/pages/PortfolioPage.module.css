@@ -100,7 +100,13 @@
   place-items: center;
   aspect-ratio: 16 / 9;
   background: var(--color-mist);
-  align-self: start;
+}
+
+@media (min-width: 48rem) {
+  .featuredMedia {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
 }
 
 .featuredBody {

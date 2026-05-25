@@ -10,6 +10,7 @@ import {
 import * as THREE from "three";
 import type { Mesh } from "three";
 import type { MemorySceneProps } from "../stack/types";
+import { colors, inkMuted } from "../theme/colors";
 import styles from "./Snake.module.css";
 
 const GRID_SIZE = 16;
@@ -33,10 +34,10 @@ const INITIAL_SNAKE: [number, number][] = [
 const INITIAL_DIR: [number, number] = [0, 1];
 
 const COLORS = {
-  snake: "#1A1A1A",
-  eyes: "#F5F2EC",
-  appleOuter: "#888880",
-  appleInner: "#F5F2EC",
+  snake: colors.ink,
+  eyes: colors.paper,
+  appleOuter: inkMuted,
+  appleInner: colors.paper,
 } as const;
 
 type Vec2 = [number, number];

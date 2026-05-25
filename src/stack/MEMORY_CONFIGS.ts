@@ -22,12 +22,11 @@ export const MEMORY_CONFIGS: MemoryConfig[] = [
     sound: null,
   },
   {
-    id: "memory-2",
-    component: lazy(() => import("../scenes/MemoryStubScene")),
-    stubLabel: "Memory 2 — stub",
-    text: "Memory two — coming soon.",
-    textDelay: 1400,
-    textHold: 4000,
+    id: "pokemon",
+    component: lazy(() => import("../scenes/Pokemon")),
+    text: "I never had a DS, so I made one from paper.",
+    textDelay: 400,
+    textHold: 2200,
     sound: null,
   },
   {

@@ -1,8 +1,8 @@
 :root {
-  /* DESIGN.md — resolved at implementation; OKLCH-ready placeholders */
-  --color-paper: #f5f2ec;
-  --color-ink: #2a2824;
-  --color-mist: #e8e4dc;
+  /* DESIGN.md — Foggy Notebook; OKLCH with warm paper hue (~95) */
+  --color-paper: oklch(0.965 0.008 95);
+  --color-ink: oklch(0.26 0.012 75);
+  --color-mist: oklch(0.92 0.008 95);
 
   --font-sans: "DM Sans", system-ui, sans-serif;
 

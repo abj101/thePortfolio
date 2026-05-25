@@ -1,0 +1,432 @@
+.root {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 600ms cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+}
+
+.root[data-displayed] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dsShell {
+  position: relative;
+  width: min(392px, 92vw);
+  aspect-ratio: 392 / 398;
+  /*
+   * Screen layout in design px (scales with shell).
+   * Tune --screen-x / --screen-y-top on this node.
+   */
+  --ds-w: 392;
+  --ds-h: 398;
+  --screen-w: 188;
+  --screen-h: 143;
+  --screen-x: 98;
+  --screen-y-top: 21;
+  --screen-y-step: 203;
+}
+
+.dsSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.screenOverlay {
+  position: absolute;
+  left: calc(100% * var(--screen-x) / var(--ds-w));
+  width: calc(100% * var(--screen-w) / var(--ds-w));
+  height: calc(100% * var(--screen-h) / var(--ds-h));
+  overflow: hidden;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: "Press Start 2P", monospace;
+  box-sizing: border-box;
+}
+
+.screenTopOverlay {
+  top: calc(100% * var(--screen-y-top) / var(--ds-h));
+}
+
+.screenBottomOverlay {
+  top: calc(100% * (var(--screen-y-top) + var(--screen-y-step)) / var(--ds-h));
+}
+
+.topScreen {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  gap: 0;
+}
+
+.arena {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  container-type: size;
+  --sprite-size: 36cqw;
+  --enemy-sprite-top: 18%;
+  /* Sheet frame feet offset (200px frames, see assets/*Sheet.png) */
+  --enemy-feet-from-bottom: 23%;
+  --player-feet-from-bottom: -4.5%;
+}
+
+.infoBox {
+  position: absolute;
+  width: calc(46% + 20px);
+  box-sizing: border-box;
+}
+
+.infoBoxFrame {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.infoBoxPath {
+  fill: var(--color-paper);
+  stroke: var(--color-ink);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.infoBoxInner {
+  position: relative;
+  z-index: 1;
+  padding: 4px 10px 3px;
+  box-sizing: border-box;
+}
+
+.infoBoxRival {
+  top: 2px;
+  left: 2px;
+}
+
+.infoBoxPlayer {
+  right: 2px;
+  bottom: 2px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 6px;
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+
+.hpLabel {
+  font-size: 5px;
+}
+
+.hpTrack {
+  height: 4px;
+  border: 1px solid var(--color-ink);
+  background: var(--color-paper);
+}
+
+.hpFill {
+  height: 100%;
+  background: var(--color-ink);
+  transition: width 400ms ease-out;
+}
+
+/* Faded ellipses under each Pokémon (Gen II–style platforms) */
+.platform {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+  opacity: 0.12;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.monSpot {
+  position: absolute;
+  width: var(--sprite-size);
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.monSpotEnemy {
+  right: calc(8% - 4px);
+  top: var(--enemy-sprite-top);
+}
+
+.monSpotPlayer {
+  left: calc(6% - 4px);
+  bottom: 0;
+}
+
+.monSpot .platform {
+  left: 50%;
+  right: auto;
+  top: auto;
+  width: 105.6%;
+  height: 16.8%;
+  transform: translateX(-50%);
+}
+
+.platformEnemy {
+  bottom: var(--enemy-feet-from-bottom);
+}
+
+.platformPlayer {
+  bottom: var(--player-feet-from-bottom);
+  width: 120%;
+  transform: translateX(-58%);
+}
+
+.platformHidden {
+  opacity: 0;
+}
+
+.sprite {
+  position: absolute;
+  z-index: 1;
+  width: var(--sprite-size);
+  height: 44%;
+  background: var(--color-ink);
+  opacity: 0.85;
+  transition: transform 400ms ease-out, opacity 300ms ease;
+}
+
+.monSpot .sprite {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.spriteEnemy {
+  height: auto;
+  aspect-ratio: 1;
+  background-color: transparent;
+  background-image: url("../assets/totodileSheet.png");
+  background-repeat: no-repeat;
+  background-size: 100% 200%;
+  background-position: center 0;
+  image-rendering: pixelated;
+  transform: translateX(60px);
+}
+
+/* Sheet: 200×200 frames, stacked; frame 2 (1-based) = attack */
+.spriteEnemyAttack {
+  background-position: center 100%;
+}
+
+.spriteEnemyVisible {
+  transform: translateX(0);
+}
+
+.spritePlayer {
+  height: auto;
+  aspect-ratio: 1;
+  background-color: transparent;
+  background-image: url("../assets/cyndaquilSheet.png");
+  background-repeat: no-repeat;
+  background-size: 100% 200%;
+  background-position: center 0;
+  image-rendering: pixelated;
+  transform: translateX(-60px);
+}
+
+.spritePlayerVisible {
+  transform: translateX(0);
+}
+
+/* Sheet: 200×200 frames, stacked; frame 2 (1-based) = attack */
+.spritePlayerAttack {
+  background-position: center 100%;
+}
+
+.spriteHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Press Start 2P paints high in em box — pad by row height, not flex center */
+.dialogueBox {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  height: 28px;
+  padding: 9px 6px;
+  border: 2px solid var(--color-ink);
+  font-family: "Press Start 2P", monospace;
+  font-size: 6px;
+}
+
+.dialogueLine {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 6px;
+  line-height: 6px;
+}
+
+.dialogueCaret {
+  flex-shrink: 0;
+  width: 0;
+  height: 0;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-left: 5px solid var(--color-ink);
+}
+
+.dialogueText {
+  flex: 1;
+  min-width: 0;
+  font-size: 6px;
+  line-height: 6px;
+}
+
+.bottomScreen {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  gap: 3px;
+}
+
+.partyDots {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  font-size: 8px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.moveGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  flex: 1;
+}
+
+.moveBtn {
+  font-family: inherit;
+  font-size: 6px;
+  padding: 6px 4px;
+  border: 2px solid var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.moveBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.moveBtn:not(:disabled):hover {
+  background: var(--color-mist);
+}
+
+@keyframes lungeRight {
+  0% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(14px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes lungeLeft {
+  0% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(-14px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  16%,
+  50%,
+  83% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes slideOffRight {
+  0% {
+    transform: translateX(0);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(72px);
+    opacity: 0;
+  }
+}
+
+@keyframes slideOffLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(-72px);
+    opacity: 0;
+  }
+}
+
+.lungeRight {
+  animation: lungeRight 200ms ease-out forwards;
+}
+
+.lungeLeft {
+  animation: lungeLeft 200ms ease-out forwards;
+}
+
+.flash {
+  animation: flash 300ms step-end forwards;
+}
+
+.shake {
+  animation: shake 400ms ease-in-out forwards;
+}
+
+.slideOffRight {
+  animation: slideOffRight 500ms ease-in forwards;
+}
+
+.slideOffLeft {
+  animation: slideOffLeft 500ms ease-in forwards;
+}

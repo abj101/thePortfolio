@@ -89,9 +89,15 @@ export function TextMoment({ text, delay, holdDuration }: TextMomentProps) {
       return;
     }
 
-    if (phase === "PLAYING") {
-      revealMemoryAfterIntro();
-    }
+    // Only end of intro fade-out — ignore fade-in / interrupted transitionend.
+    if (phase !== "PLAYING" || !introFadePending.current) return;
+
+    const opacity = parseFloat(
+      window.getComputedStyle(event.currentTarget).opacity,
+    );
+    if (opacity > 0.01) return;
+
+    revealMemoryAfterIntro();
   };
 
   return (

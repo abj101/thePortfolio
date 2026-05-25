@@ -1,8 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import type { ReactNode } from "react";
 import * as THREE from "three";
-
-const PAPER_CLEAR = 0xf5f2ec;
+import { colorsThree } from "../theme/colors";
 
 type ExperienceCanvasProps = {
   children?: ReactNode;
@@ -24,7 +23,7 @@ export function ExperienceCanvas({ children, className }: ExperienceCanvasProps)
       tabIndex={0}
       gl={{ antialias: true, alpha: false }}
       onCreated={({ gl }) => {
-        gl.setClearColor(new THREE.Color(PAPER_CLEAR), 1);
+        gl.setClearColor(new THREE.Color(colorsThree.paper), 1);
       }}
     >
       {children}
